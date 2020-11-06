@@ -25,15 +25,27 @@ This code is example code and comes with no warranties :)
 
 %create_test_data;
 
+%macro create_measurements; 
+
 * gather the measurements for our data set; 
-libname target &pathname; 
+  libname target &pathname 
+
+%let exist = %sysfunc( exist(target.test_data) ); 
+%if not &exist %then %goto term; 
 
 data measurements; 
   dsid = open('target.test_data'); 
   nobs = attrn(dsid,'nobs'); 
   nvars = attrn(dsid,'nvars'); 
   modte = datepart( attrn(dsid,'modte') ); * no need for the time; 
-      rc = close(dsid); 
-      audit_date = today(); 
-     drop rc dsid; 
-run;
+  rc = close(dsid); 
+  audit_date = today(); 
+  drop rc dsid; 
+run; 
+%return; 
+
+%term: 
+  %put the data set does not exist; 
+%mend create_measurements; 
+
+%create_measurements;
