@@ -24,3 +24,17 @@ This code is example code and comes with no warranties :)
 %mend create_test_data; 
 
 %create_test_data;
+
+* gather the measurements for our data set; 
+libname target "c:\data\wuss2012\git\projects\auditor\test\"; 
+
+data measurements; 
+  dsid = open('target.test_data'); 
+  nobs = attrn(dsid,'nobs'); 
+  nvars = attrn(dsid,'nvars'); 
+  modte = datepart( attrn(dsid,'modte') ); * no need for the time; 
+      rc = close(dsid); 
+      audit_date = today(); 
+     drop rc dsid; 
+run;
+
