@@ -1,4 +1,4 @@
 /*test git conflict handling*/
 
-proc print data=sashelp.cars (obs=10);
+proc print data=sashelp.cars;
 run;
