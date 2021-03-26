@@ -10,7 +10,7 @@ modification date
 This code is example code and comes with no warranties :)
 */
 
-%let pathname = "C:\GitDemos\GitData";
+%let pathname = "/home/sasdemo/sasuser.v94/GitData";
 
 %macro create_test_data; 
     libname test &pathname; 
@@ -24,3 +24,18 @@ This code is example code and comes with no warranties :)
 %mend create_test_data; 
 
 %create_test_data;
+
+
+/* Gather the measurements for our data set */
+libname target &pathname; 
+
+data measurements; 
+  dsid = open('target.test_data'); 
+  nobs = attrn(dsid,'nobs'); 
+  nvars = attrn(dsid,'nvars'); 
+  modte = datepart( attrn(dsid,'modte') ); * no need for the time; 
+      rc = close(dsid); 
+      audit_date = today(); 
+     drop rc dsid; 
+run;
+
