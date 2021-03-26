@@ -1,0 +1,80 @@
+ 
+ 1          OPTIONS NONOTES NOSTIMER NOSOURCE NOSYNTAXCHECK;
+ 72         
+ 73         /*
+ 74         auditor.sas
+ 75         This code will audit a SAS data set.
+ 76         
+ 77         The measurements we will be taking are:
+ 78         number of observations
+ 79         number of variables
+ 80         modification date
+ 81         
+ 82         This code is example code and comes with no warranties :)
+ 83         */
+ 84         
+ 85         %let pathname = "/home/sasdemo/sasuser.v94/GitData";
+ 86         
+ 87         %macro create_test_data;
+ 88             libname test &pathname;
+ 89         
+ 90             data test.test_data;
+ 91               do i = 1 to 10;
+ 92                 output;
+ 93               end;
+ 94             run;
+ 95         
+ 96         %mend create_test_data;
+ 97         
+ 98         %create_test_data;
+ NOTE: Libref TEST refers to the same physical library as TARGET.
+ NOTE: Libref TEST was successfully assigned as follows: 
+       Engine:        V9 
+       Physical Name: /home/sasdemo/sasuser.v94/GitData
+ NOTE: The data set TEST.TEST_DATA has 10 observations and 1 variables.
+ NOTE: DATA statement used (Total process time):
+       real time           0.00 seconds
+       cpu time            0.00 seconds
+       
+ 
+ 99         
+ 100        /* Gather the measurements for our data set */
+ 101        libname target &pathname;
+ NOTE: Libref TARGET refers to the same physical library as TEST.
+ NOTE: Libref TARGET was successfully assigned as follows: 
+       Engine:        V9 
+       Physical Name: /home/sasdemo/sasuser.v94/GitData
+ 102        
+ 103        %macro create_measurements;
+ 104        
+ 105        %let exist = %sysfunc( exist(target.test_data) );
+ 106        %if not &exist %then %goto term;
+ 107        
+ 108        data measurements;
+ 109          dsid = open('target.test_data');
+ 110          nobs = attrn(dsid,'nobs');
+ 111          nvars = attrn(dsid,'nvars');
+ 112          modte = datepart( attrn(dsid,'modte') ); * no need for the time;
+ 113          rc = close(dsid);
+ 114          audit_date = today();
+ 115          drop rc dsid;
+ 116        run;
+ 117        %return;
+ 118        
+ 119        %term:
+ 120          %put the data set does not exist;
+ 121        %mend create_measurements;
+ 122        
+ 123        %create_measurements;
+ 
+ NOTE: The data set WORK.MEASUREMENTS has 1 observations and 4 variables.
+ NOTE: DATA statement used (Total process time):
+       real time           0.00 seconds
+       cpu time            0.00 seconds
+       
+ 
+ 124        
+ 125        
+ 126        
+ 127        OPTIONS NONOTES NOSTIMER NOSOURCE NOSYNTAXCHECK;
+ 139        
