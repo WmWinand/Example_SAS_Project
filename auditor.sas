@@ -52,3 +52,6 @@ run;
 
 proc print data=measurements;
 run;
+
+proc print data=test.test_data;
+run;
