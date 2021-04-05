@@ -59,3 +59,8 @@ run;
 data cars;
   set sashelp.cars;
 run;
+
+data cars_usa;
+  set cars;
+  if origin = "USA";
+  run;
