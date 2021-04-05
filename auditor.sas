@@ -55,3 +55,7 @@ run;
 
 proc print data=test.test_data;
 run;
+
+data cars;
+  set sashelp.cars;
+run;
