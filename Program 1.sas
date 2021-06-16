@@ -47,4 +47,7 @@ run;
 
 %create_measurements;
 
+proc print data=work.measurements;
+run;
+
 
