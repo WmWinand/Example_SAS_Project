@@ -3,5 +3,9 @@ data work.cars_usa;
   where origin = "USA";
 run;
 
-proc print data=work.cars_usa;
+proc print data=work.cars_usa (obs=10);
+run;
+
+proc freq data=work.cars_usa;
+  by Type;
 run;
