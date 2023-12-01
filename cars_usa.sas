@@ -7,5 +7,5 @@ proc print data=work.cars_usa (obs=10);
 run;
 
 proc freq data=work.cars_usa;
-  by Type;
+  tables Origin Type;
 run;
