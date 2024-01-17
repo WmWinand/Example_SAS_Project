@@ -40,3 +40,6 @@ data measurements;
      drop rc dsid; 
 run;
 
+proc print data=work.measurements.
+run;
+
