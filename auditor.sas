@@ -29,6 +29,14 @@ libname test &pathname;
 
 %create_test_data;
 
-proc print data=test.test_data;
+data measurements; 
+  dsid = open('test.test_data'); 
+  nobs = attrn(dsid,'nobs'); 
+  nvars = attrn(dsid,'nvars'); 
+  modte = datepart( attrn(dsid,'modte') ); * no need for the time; 
+      rc = close(dsid); 
+      audit_date = today(); 
+     drop rc dsid; 
 run;
+
 
