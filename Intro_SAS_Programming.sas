@@ -5,6 +5,7 @@
 
 /* SET SAS LIBREF */
 /* libname mydata "/greenmonthly-export/ssemonthly/homes/T.Winand@sas.com/Git_Repo/data"; */
+%let mydata = D:\MyDemos\Data;
 libname mydata "/innovationlab-export/innovationlab/homes/T.Winand@sas.com/Data/Datasets";
 
 
@@ -43,6 +44,16 @@ data class_m_bmi class_f_bmi;
 	else if sex='F' then
 		output class_f_bmi;
 run;
+
+/* PROC PRINT TO EXCEL WITH A FILTER */ 
+ ods excel file="&mydata/class_m_highBmi.xlsx"; 
+ title "Listing of Class Males with High BMI"; 
+ proc print data=class_m_bmi; 
+   where bmi > 18; 
+ run; 
+ ods excel close; 
+ title""; 
+
 
 
 
