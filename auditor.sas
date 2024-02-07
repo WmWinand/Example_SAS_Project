@@ -10,7 +10,9 @@ modification date
 This code is example code and comes with no warranties :)
 */
 
-%let pathname = "/greenmonthly-export/ssemonthly/homes/T.Winand@sas.com/Data/Git_Data";
+
+%let pathname = "/innovationlab-export/innovationlab/homes/T.Winand@sas.com/Data";
+
 
 libname test &pathname;
 
@@ -26,20 +28,3 @@ libname test &pathname;
 %mend create_test_data; 
 
 %create_test_data;
-
-/* Gather the measurements for our data set */
-libname target &pathname; 
-
-data measurements; 
-  dsid = open('test.test_data'); 
-  nobs = attrn(dsid,'nobs'); 
-  nvars = attrn(dsid,'nvars'); 
-  modte = datepart( attrn(dsid,'modte') ); * no need for the time; 
-      rc = close(dsid); 
-      audit_date = today(); 
-     drop rc dsid; 
-run;
-
-proc print data=work.measurements.
-run;
-
