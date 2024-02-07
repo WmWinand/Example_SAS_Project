@@ -32,4 +32,17 @@ data class;
   bmi = (weight / (height*height)) * 703;
 run;
 
+/* DATA STEP CREATING MULTIPLE OUTPUT DATASETS & FORMATTING BMI */
+data class_m_bmi class_f_bmi;
+	set sashelp.class;
+	format bmi comma6.3;
+	bmi=(weight / (height*height)) * 703;
+
+	if sex='M' then
+		output class_m_bmi;
+	else if sex='F' then
+		output class_f_bmi;
+run;
+
+
 
