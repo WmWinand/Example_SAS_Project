@@ -26,3 +26,10 @@ proc print data=class (obs=10);
   var name sex age weight;
 run;
 
+/* DATA STEP CREATING A CALCULATED VARIABLE */
+data class;
+  set sashelp.class;
+  bmi = (weight / (height*height)) * 703;
+run;
+
+
