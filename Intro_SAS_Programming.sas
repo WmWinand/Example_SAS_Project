@@ -41,4 +41,13 @@ data class_m_bmi class_f_bmi;
 		output class_f_bmi;
 run;
 
+PROC PRINT TO EXCEL WITH A FILTER
+ods excel file="&mydata/class_m_highBmi.xlsx";
+title "Listing of Class Males with High BMI";
+proc print data=class_m_bmi;
+  where bmi > 18;
+run;
+ods excel close;
+title"";
+
 
