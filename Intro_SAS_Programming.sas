@@ -17,3 +17,6 @@ data work.class;
   set sashelp.class;
 run;
 
+/* THIS IS AN EXAMPLE OF A SIMPLE PROCEDURE */
+proc print data=work.class;
+run;
