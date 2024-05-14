@@ -29,3 +29,16 @@
 			 
 			proc print data=test.test_data;
 run;
+
+		/* Gather the measurements for our data set */
+		libname target &pathname; 
+		 
+		data measurements; 
+		  dsid = open('test.test_data'); 
+		  nobs = attrn(dsid,'nobs'); 
+		  nvars = attrn(dsid,'nvars'); 
+		  modte = datepart( attrn(dsid,'modte') ); * no need for the time; 
+		      rc = close(dsid); 
+		      audit_date = today(); 
+		     drop rc dsid; 
+		run;
