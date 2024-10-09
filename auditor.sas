@@ -57,6 +57,9 @@ run;
   %put the data set does not exist; 
 %mend create_measurements; 
 
+proc print data=measurements;
+run;
+
 %create_measurements;
 
 
